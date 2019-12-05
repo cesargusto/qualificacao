@@ -1,0 +1,151 @@
+\chapter{Caracterização do Problema} \label{problema}
+\markboth{Caracterização do Problema}{Caracterização do Problema}
+
+Este capítulo apresenta o problema abordado neste projeto de dissertação. Está organizado da seguinte forma: a Seção \ref{definicao} apresenta a definição do problema e discute sua dificuldade combinatória. A Seção \ref{formulacao} introduz uma formulação matemática para o problema em Otimização Linear Inteira. A Seção \ref{avaliacao} mostra uma solução teórica exata. 
+
+\section{Definição} \label{definicao}
+
+O Problema da k-Partição de Números (\emph{Multi-Way Number Partitioning Problem} -- MWNPP apresentado na Seção \ref{mwnpp} é a versão abordada, originalmente, em \citet{karmarkar:1982}. Sua entrada é um conjunto $S$ e a saída é uma partição de $S$ com tamanho $k$.
+
+\begin{defi}
+Seja $S=\{a_1,a_2, ..., a_n\}$ um conjunto de inteiros positivos $a_l$, $l = 1, \ldots, n$, e $k$ um número inteiro positivo. O Problema da k-Partição de Números consiste em encontrar uma k-partição de $S$, na forma $\{A_1, A_2, ..., A_k\}$, que minimize a função $f$ definida por:
+\begin{equation}
+f(\{A_1, A_2, ..., A_k\})=\max_{i}\left\{\sum_{x\in A_i}x\right\}-\min_{j}\left\{\sum_{x\in A_j}x\right\}
+\end{equation} {\null \hfill \mbox{$\Box$}}
+\end{defi}
+
+A dificuldade combinatória desse problema, quando resolvido por uma enumeração ingênua das k-partições de $S$, é dada pelo Número de Stirling $S(n,k)$\footnote{\url{http://mathworld.wolfram.com/StirlingNumberoftheSecondKind.html}}, que conta a quantidade de formas distintas de se repartir um conjunto de tamanho $n$ em $k$ partes. Encontra-se uma análise mais detalhada do Número de Stirling em \citet[pág. 80ff]{stanley:1997} e em \citet{griffiths:2010}.
+
+Defina $S(n-1,k)$ como o número de partições com $k$ partes de um conjunto com $n-1$ elementos. Claro que o número de n-partições de um conjunto com $n$ elementos é $1$ (ou seja, $S(n,n)=1$) e o número de 1-partição de qualquer conjunto é $1$ (ou seja, $S(n,1)=1$). Se um n-ésimo elemento for adicionado ao conjunto, é possível descobrir $S(n,k)$ usando duas informações: $S(n-1,k-1)$ e $S(n-1,k)$.
+
+Inserindo o n-ésimo elemento como a k-ésima parte, existem $S(n-1,k-1)$ possibilidades. Inserindo o n-ésimo elemento em uma das $k$ partes já existentes, contadas por $S(n-1,k)$, tem-se $k~S(n-1,k)$ possibilidades:
+
+\begin{equation}
+S(n,k)=S(n-1,k-1) ~+~ k~S(n-1,k) \label{exxx}
+\end{equation}
+
+
+\begin{exem}
+Seja o conjunto de inteiros $A=\{1,2,3\}$, para $n=3$ e considere $k=2$. Assim, o Número de Stirling produz $S(3,2)=3$. Desse modo as partições são dadas por:
+\[
+\begin{array}{c}
+\{1,2\},\{3\} ;\\
+\{1,3\},\{2\} ;\\
+\{2,3\},\{1\} ;\\
+\end{array}
+\]
+
+Seja agora o mesmo conjunto de inteiros $A=\{1,2,3\}$, para $n=3$ e considere $k=1$. Assim, o número de Stirling leva a $S(3,1)=1$ e à partição:
+\[
+\{1,2,3\}
+\]
+
+Considere agora o conjunto de inteiros $A=\{1,2,3,4\}$ para $n=4$ e seja $k=2$. Desse modo, as partições são:
+\[
+\begin{array}{c}
+\{1,2,3\},\{4\} ; \{1,2\},\{3,4\} ;\\
+\{1,2,4\},\{3\} ; \{1,3\},\{2,4\} ;\\
+\{1,3,4\},\{2\} ; \{1,4\},\{2,3\} ;\\
+\{2,3,4\},\{1\}
+\end{array}
+\]
+
+Ou seja, a partir da expressão (\ref{exxx}), tem-se que:
+\[
+S(4,2)=S(3,1)+2.S(3,2)=7
+\]{\null \hfill \mbox{$\Box$}}
+\end{exem}
+
+Além de enumerar todas as partições de tamanho $k$, ainda é justo inserir um fator multiplicador $O(n)$, responsável pelo custo de se avaliar a função objetivo. No fim dos cálculos, a ordem de complexidade do algoritmo ingênuo seria $O(n.S(n,k))$.
+
+O Número de Stirling não tem fórmula fechada. Uma outra alternativa para expressar essa quantidade, vista em \citet{stanley:1997} é a expressão:
+
+\begin{equation}
+S(n,k)=\frac{1}{k!}\sum_{j=0}^{k}(-1)^{k-j}{k\choose j}j^{n}
+\end{equation}
+
+Esse número supera as complexidades de ordem exponenciais quando o valor de $k$ segue a sequência \href{http://oeis.org/A024417}{A024417}\footnote{\url{http://oeis.org/A024417}}. Se $a(n)\in A024417$ então $S(n,a(n))\geq S(n,k), \quad \forall k$. Esse fato pode ser conferido em \href{http://oeis.org/A002870}{A002870}\footnote{\url{http://oeis.org/A002870}}, a sequência do Maior Número de Stirling indexada em $n$. Se $a(n)\in A024417$, então $S(n,a(n))\in A002870$. O gráfico abaixo mostra casos exponenciais em escala logarítmica comparados ao n-ésimo Maior Número de Stirling. Este gráfico é composto por retas sendo cortadas por uma função crescente.
+
+A { \em On-Line Encyclopedia of Integer Sequences} - OEIS é uma base de dados pública com variadas sequências de números inteiros criada por \cite{sloane:1991}. Nela é possível buscar uma sequência numérica apenas digitando seus primeiros termos e, também, encontrar os principais artigos ligados a mesma. É a fonte das sequências \href{http://oeis.org/A002870}{A002870} e \href{http://oeis.org/A024417}{A024417}.
+
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width= 0.8 \linewidth]{./complex}
+\caption{O maior dos Números de Stirling vs funções exponenciais. Dados retirados de \citet{sloane:1991}}
+\label{figura2}
+\end{figure}
+
+Esta figura mostra que o Maior Número de Stirling domina assintoticamente funções exponenciais, ou seja, para todo $c>1$ existe um $n$ suficientemente grande tal que$S(n,a(n))>c^n$.
+
+\section{Formulação Matemática} \label{formulacao}
+
+O modelo matemático de Otimização Linear Inteira proposto nesse trabalho, como contribuição efetiva, usa duas variáveis inteiras para representar o limite inferior $t_1$ e superior $t_2$, para a soma dos elementos de todas as $k$ partes. As demais variáveis $x_{ij}$ são binárias e informam se um elemento está ou não numa partição. A notação $I_m = \{y\in\mathbb{Z}: \quad 1\leq y\leq m\}$ significa todos os inteiros entre $1$ e $m$, inclusive.
+
+
+\begin{eqnarray}
+\min && \label{r1} t_2 - t_1 \\
+\mbox{suj. a}  &&  \label{r2} t_1 \leq \sum_{i=1}^{n}a_i x_{ij} \leq t_2, \quad \forall j\in I_k \\
+&&  \label{r3} \sum_{j=1}^{k} x_{ij} =1, \quad \forall i\in I_n \\
+&&  \label{r5} t_1,t_2\in\mathbb{Z_{+}} \\
+&&  \label{r6} x_{ij}\in\{0,1\}
+\end{eqnarray}
+
+A relação de pertinência (\ref{r6}) indica que $x_{ij}=1$ se o elemento de índice $i$ do conjunto $S$ pertence à parte de índice $j$. A relação (\ref{r5}) informa que os limitantes da maior e menor soma dos elementos das partições é sempre positiva. As $n$ equações indicadas pela expressão (\ref{r3}) garantem que as partições são disjuntas e que todos os elementos de $S$ estão alocados em alguma parte, já que o problema só está bem definido quando $n>k$. As $k$ inequações (\ref{r2}) mostram que o modelo garante que cada partição é não vazia, pois $t_1>0$, por efeito de (\ref{r5}) e, também, que estão todas contidas no intervalo $[t_1, t_2]$. Por fim, a expressão (\ref{r1}) é o tamanho do intervalo que contém todas as $k$ somas dos elementos das partes e o objetivo de minimização.
+
+\section{Visão Teórica} \label{avaliacao}
+
+Uma abordagem mais algorítmica do problema sugere a construção de um algoritmo polinomial para o (MWNPP), usando um algoritmo hipotético que retorna sim ($1$) ou não ($0$) para uma pergunta específica sobre a entrada. Esse algoritmo chama-se Oráculo e é denotado por $Or(S,S')$, sendo $S$ e $S'$  duas instâncias de tamanho $n$ e $n-1$, respectivamente, do (MWNPP).
+
+A pergunta em questão é:
+\begin{perg}
+As entradas $S$ e $S'$ têm o mesmo valor ótimo de função objetivo~?
+\end{perg}
+
+O exemplo \ref{exemplo1} mostra uma situação associada ao uso desse Oráculo.
+
+\begin{exem}\label{exemplo1}
+Suponha que $k=3$, $S'=\{1,2,3,4\}$ e $S=\{1,2,3,5,6\}$. O resultado de $Or(S,S') = Or(\{1,2,3,5,6\},\{1,2,3,4\})=1$ (SIM) pois a 3-partição ótima de $S$ pode ser: $\{1,2,3\},\{5\},\{6\}$ ou $\{2,3\},\{1,5\},\{6\}$ ambas com valor de função objetivo igual a $1$. Assim como $S'$, que tem 3-partição ótima $\{1,2\},\{3\},\{4\}$, com valor de função objetivo igual a $1$. \fim
+\end{exem}
+
+A ideia central dessa técnica é decidir se dois elementos distintos do conjunto $S$ pertencem ou não à mesma partição, com a troca de dois elementos do conjunto pela soma dos mesmos. Sempre que essa troca não mudar o valor ótimo, significa que os dois valores substituídos pertencem à mesma partição.
+
+\begin{exem}\label{exemplo2}
+Inicialmente, $S=\{1,2,3,5,6\}$. Cria-se um novo conjunto $S'=\{1+2,3,5,6\}$. Fazendo a chamada do oráculo sobre $S$ e $S'$, descobre-se que $1$ e $2$ estão contidos na mesma parte quando $Or(S,S')=1$ e que estão em partes distintas quando caso contrário. Nesse exemplo, é claro que $Or(\{1,2,3,5,6\}, \{3,3,5,6\})=1$ (veja no exemplo \ref{exemplo1}). \fim
+\end{exem}
+
+
+
+\begin{algorithm}[H] \label{algoritmo1}
+\SetAlgoLined
+\Entrada{$Or()$ e um conjunto $S$}
+\Saida{$\{A_1, A_2, ..., A_k\}$}
+\Inicio{
+	$j=1$\;
+	\Enqto{$S \neq \varnothing $}{
+		$ k=1$\;
+		$ insere(A_j, a_k)$\;
+		\Para{$a_i \in S-\{a_k\}$}{
+			$S'=S$\;
+			$ remove(S', a_i)$\;
+			$ insere(S', a_i+a_k)$\;
+			\Se{$Or(S,S')=1$}{
+				$ insere(A_j, a_i)$\;
+				$S=S'$\;
+			}
+		}
+		$j=j+1$\;
+	}
+	\Retorna{$\{A_1, A_2, ..., A_k\}$}\;
+}
+\caption{Algoritmo exato hipotético}
+\end{algorithm}
+
+O funcionamento do algoritmo é simples e direto. Primeiro, o elemento $a_1$ vai para a parte $A_1$, sendo o elemento líder da primeira parte. Em seguida, para cada $a_i\in S-\{a_1\}$, o elemento $a_i$ é trocado por $a_1+a_i$, formando um novo conjunto $S^{i}$. Executa-se $Or(S,S^{i})$ e, sempre que a resposta do oráculo for positiva, retira-se $a_i$ de $S$, armazenando-o em $A_1$ e $S$ é trocado por $S^{i}$. Repete-se o procedimento até $S=\varnothing$, $k-1$ vezes.
+
+No pior caso, este algoritmo faz $O(n^2)$ chamadas ao oráculo, pois compara o elemento líder de $A_j$ com cada um dos restantes em $S$.
+
+
+
+

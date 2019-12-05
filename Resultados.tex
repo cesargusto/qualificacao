@@ -1,0 +1,105 @@
+%-----------------------------------------------------------------------------------------------------------------------------------------
+% MODELO DE PROJETO DE QUALIFICAÇÃO DE MESTRADO
+%
+% CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE MINAS GERAIS | CEFET-MG
+% DEPARTAMENTO DE PESQUISA E PÓS-GRADUAÇÃO | DPPG
+% AUTOR: LINHA DE PESQUISA EM MODELAGEM, APERFEIÇOAMENTO E OTIMIZAÇÃO DE PROCESSOS | MAOP
+%
+% PARTE: RESULTADOS PRELIMINARES
+%
+% ALUNO: Alexandre Frias Faria
+%-----------------------------------------------------------------------------------------------------------------------------------------
+
+\chapter{Resultados Preliminares} \label{resultados}
+\markboth{Resultados Preliminares}{Resultados Preliminares}
+
+\section{Publicações} \label{publicacoes}
+
+Até o presente momento, este trabalho tem uma publicação, intitulada, {\em UM ALGORITMO ITERATIVO PARA O PROBLEMA DA K-PARTIÇÃO DE NÚMEROS}, publicada no evento CILAMCE-2015 \cite{alexandre:2015}.
+
+
+\section{Resultados Computacionais} \label{computacionais}
+
+Implementa-se os algoritmos do trabalho em MATLAB versão 7. Realizam-se testes em um computador com processador Intel Core i3-M330, 2.13 GHz, 3GB de RAM e sistema operacional Windows 32 bits.
+
+Obtem-se resultados a partir de instâncias geradas aleatoriamente. Os conjuntos gerados tem tamanhos entre $100$ e $110$ e os elementos são inteiros variando de $50$ até $350$. O valor ótimo do problema - ($opt$), o tamanho do conjunto - $n$ e o número de partes - $k$ são parâmetros de entrada do gerador de instâncias. Um número grande é escrito como soma de outros $k$ números de modo que a diferença entre o maior e menor seja igual ao parâmetro $opt$. Em seguida, esses $k$ números são escritos como soma de outros $\frac{n}{k}$ elementos aleatórios formando um vetor de tamanho $n$ cuja partição ótima tem função objetivo menor ou igual a $opt$. O algoritmo proposto encontrou o ótimo exceto nas instâncias com valores em negrito.
+
+Abaixo, os resultados dos testes devem ser lidos da seguinte maneira: a variável $si$  indica a i-ésima instância. O número $k=\{3,4,5\}$ complementa a instância indicando o tamanho da partição. A primeira coluna indica a instância do experimento. A segunda coluna contem resultados alcançados pelo (LPT). A terceira coluna são os resultados finais melhorados com o (ILS) partindo do (LPT).
+
+\vspace{2 cm}
+\begin{table}[ht!]
+\centering
+
+    \begin{tabular}{cccc}
+    \hline
+    Instâncias para k=3         & Algoritmo 1   & Algoritmo 2 & $opt$\\
+    \hline
+    s1                          & 9             &   3         & 3\\
+    s2                          & 51            &   1         & 1\\
+    s3                          & 3             &   3         & 3\\
+    s4                          & 51            &   3         & 3\\
+    s5                          & 39            &   {\bf 10}  & {\bf 4}\\
+    s6                          & 49            &   2         & 2\\
+    s7                          & 57            &   2         & 2\\
+    s8                          & 44            &   5         & 5\\
+    s9                          & 3             &   1         & 1\\
+    \end{tabular}
+\caption{Experimentos demonstrando a melhora provocada pelo (ILS) para k=3}
+\end{table}
+
+\newpage
+
+\begin{table}[ht!]
+\centering
+
+    \begin{tabular}{cccc}
+    \hline
+    Instâncias para k=4 & Algoritmo 1     & Algoritmo 2 & $opt$\\
+    \hline
+    s1                          &  41    &    3        & 3\\
+    s2                          &  47    &    0        & 0\\
+    s3                          &  48    &    5        & 5\\
+    s4                          &  50    &    1        & 1\\
+    s5                          &  4     &    4        & 4\\
+    s6                          &  50    &    {\bf 9}  & {\bf 7}\\
+    s7                          &  58    &    0        & 0\\
+    s8                          &  48    &    5        & 5\\
+    s9                          &  12    &    3        & 3\\
+    \end{tabular}
+\caption{Experimentos demonstrando a melhora provocada pelo ILS para k=4}
+\end{table}
+
+\begin{table}[ht!]
+\centering
+
+    \begin{tabular}{cccc}
+    \hline
+    Instâncias para k=5 & Algoritmo 1     & Algoritmo 2 & $opt$\\
+    \hline
+    s1                          & 16   &   6        & 6\\
+    s2                          & 48   &   2        & 2\\
+    s3                          & 45   &   6        & 6\\
+    s4                          & 49   &   6        & 6\\
+    s5                          & 53   &   7        & 7\\
+    s6                          & 50   &   0        & 0\\
+    s7                          & 62   &   3        & 3\\
+    s8                          & 49   &   {\bf 11} & {\bf 6}\\
+    s9                          & 51   &   3        & 3\\
+    \end{tabular}
+\caption{Experimentos demonstrando a melhora provocada pelo ILS para k=5}
+\end{table}
+
+
+
+\section{Análise} \label{analise}
+
+
+Apresentou-se uma proposta de algoritmo heurístico usando (ILS) com movimentos de realocação dos elementos entre as partes para o (MWNPP) na sua versão de otimização.  Os resultados obtidos foram testados com instâncias geradas aleatoriamente.
+
+O (ILS) empregado com método guloso consegue melhorar a solução inicial sempre que esta não é ótima. O algoritmo apresentado tem baixa complexidade e atingiu o ótimo global em todas as 10 instâncias testadas mostrando melhora significativa em relação a solução inicial construída.
+
+Como trabalhos futuros tem-se a melhoria do algoritmo apresentado com uma tabela {\em hash} que melhore a busca pelo movimento de realocação, inserção de um movimentos de permuta entre duas ou mais partes e um quadro comparativo entre os métodos exatos e aproximados para o problema descrito.
+
+
+
+

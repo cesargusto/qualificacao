@@ -1,0 +1,123 @@
+%-----------------------------------------------------------------------------------------------------------------------------------------
+% MODELO DE PROJETO DE QUALIFICAÇÃO DE MESTRADO
+%
+% CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE MINAS GERAIS | CEFET-MG
+% DEPARTAMENTO DE PESQUISA E PÓS-GRADUAÇÃO | DPPG
+% AUTOR: LINHA DE PESQUISA EM MODELAGEM, APERFEIÇOAMENTO E OTIMIZAÇÃO DE PROCESSOS | MAOP
+%
+% PARTE: PRINCIPAL
+%
+% ALUNO: Alexandre Frias Faria
+%-----------------------------------------------------------------------------------------------------------------------------------------
+
+\documentclass[12pt,a4paper]{relas}
+\usepackage[brazilian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{epsf}
+\usepackage{graphicx,color}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amssymb,amsmath}
+\usepackage{amsfonts,latexsym,psfrag,subeqnarray,subfig}
+\usepackage[latin1]{inputenc}
+\usepackage{lscape}
+\usepackage[round]{natbib}
+\usepackage{bibentry}
+\usepackage{verbatim}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage{booktabs}
+\usepackage{slashbox}
+\usepackage{scalefnt}
+\usepackage{indentfirst}
+\usepackage{natbib}
+%\makeindex
+
+\setlength{\bibhang}{0pt}
+\let\cite\citep
+% apaguei as chaves do algorithm2e em espanhol no algoritmo.sty
+% \usepackage[portuguese,ruled,lined]{algorithm2e}
+\usepackage[portuguese,ruled,lined]{algoritmo}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{2}
+
+\textwidth=15cm
+\textheight= 24cm
+\topmargin= 0.16cm
+\headheight=0cm
+\oddsidemargin= 2.5cm
+\usepackage[breaklinks=true, pdftoolbar=true, pdfmenubar=true]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=blue,
+    urlcolor=black
+}
+
+\usepackage{breakurl}
+
+\usepackage[normalem]{ulem}
+
+
+
+%------------------------------comandos para enunciar e enumerar enunciados
+\newcommand{\dem}{\quad {\bf Demonstração:}\quad}
+%\newcommand{\fim}{\newline \begin{flushright} $\blacksquare$ \end{flushright}}
+\newcommand{\fim}{\null \hfill \mbox{$\Box$}}
+\newtheorem{defi}{Definição}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{conj}{Conjectura}[section]
+\newtheorem{perg}{Pergunta}[section]
+\newtheorem{exem}{Exemplo}[section]
+\newenvironment{prova}{\noindent {\bf Prova:}}{\hfill $\Box$ \\}
+\newtheorem{axi}{Axioma}[section]
+\newtheorem{prop}{Propriedade}[section]
+\newtheorem{obs}{Observação}[section]
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{corol}{Corolário}[section]
+\newtheorem{res}{Resolução}[section]
+%------------------------------------------------------------------------------
+
+
+\newcommand\vi{\vspace{\baselineskip}}
+\newcommand\hi{\hspace*{\parindent}}
+
+\begin{document}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------
+% PRÉ-TEXTUAIS
+%-----------------------------------------------------------------------------------------------------------------------------------------
+
+\input{FolhaRosto}
+\input{Resumo}
+\input{Sumario}
+
+\pagenumbering{arabic}
+\pagestyle{meucabe}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------
+% TEXTUAIS
+%-----------------------------------------------------------------------------------------------------------------------------------------
+
+\input{Introducao}
+\input{Problema}
+\input{Teorica}
+\input{Revisao}
+\input{Algoritmos}
+\input{Objetivo}
+\input{Cronograma}
+\input{Resultados}
+
+\newpage
+\pagestyle{meucabecap}
+\newpage
+
+%-----------------------------------------------------------------------------------------------------------------------------------------
+% PÓS-TEXTUAIS
+%-----------------------------------------------------------------------------------------------------------------------------------------
+
+\input{Referencias}
+\newpage
+
+\end{document} 

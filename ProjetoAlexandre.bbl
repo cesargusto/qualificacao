@@ -1,0 +1,254 @@
+\begin{thebibliography}{34}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ausiello et~al.(2003)Ausiello, Crescenzi, Kann, Marchetti-sp, Gambosi,
+  and Spaccamela]{kann:2003}
+Ausiello,~G.; Crescenzi,~P.; Kann,~V.; Marchetti-sp,; Gambosi,~Giorgio e
+  Spaccamela,~Alberto~M.
+\newblock (2003).
+\newblock \emph{Complexity and Approximation: Combinatorial Optimization
+  Problems and Their Approximability Properties}, Capítulo Sequential
+  Algorithms for Partitioning Problems, p. 50--60.
+\newblock Springer-Verlag New York, Inc., 1st edição.
+
+\bibitem[Berretta e Moscato(1999)Berretta and Moscato]{berretta:1999}
+Berretta,~Regina e Moscato,~Pablo.
+\newblock (1999).
+\newblock The number partitioning problem: An open challenge for evolutionary
+  computation?
+\newblock Corne,~David; Dorigo,~Marco; Glover,~Fred; Dasgupta,~Dipankar;
+  Moscato,~Pablo; Poli,~Riccardo e Price,~Kenneth~V., editors, \emph{New Ideas
+  in Optimization}, p. 261--278. McGraw-Hill Ltd., UK, Maidenhead, UK, England.
+
+\bibitem[Faria et~al.(2015)Faria, {de Souza}, Silva, and Filho]{alexandre:2015}
+Faria,~Alexandre~Frias; {de Souza},~Sérgio~Ricardo; Silva,~Carlos~Alexandre e
+  Filho,~Moacir Felizardo~França.
+\newblock (2015).
+\newblock Um algoritmo iterativo para o problema da k-partição de números.
+\newblock \emph{Proceedings of the XXXVI Ibero-Latin American Congress on
+  Computational Methods in Engineering}, volume~1, (2015).
+
+\bibitem[Ferreira(2001)]{ferreira:2001}
+Ferreira,~Fernando~Fagundes.
+\newblock \emph{An{\'a}lise estat{\'\i}stica do problema da parti{\c{c}}{\~a}o
+  num{\'e}rica}.
+\newblock Tese de Doutorado, Universidade de S{\~a}o Paulo, (2001).
+
+\bibitem[Finn e Horowitz(1979)Finn and Horowitz]{horowitz:1979}
+Finn,~Greg e Horowitz,~Ellis.
+\newblock (1979).
+\newblock A linear time approximation algorithm for multiprocessor scheduling.
+\newblock \emph{BIT Numerical Mathematics}, v. 19, \penalty0 n. 3, p. \penalty0
+  312--320.
+
+\bibitem[Garey e Johnson(1979)Garey and Johnson]{garey:1979}
+Garey,~Michael~R. e Johnson,~David~S.
+\newblock (1979).
+\newblock \emph{Computers and Intractability: A Guide to the Theory of
+  NP-Completeness}.
+\newblock W. H. Freeman \& Co., New York, NY, USA.
+
+\bibitem[Gent e Walsh(1995)Gent and Walsh]{gent:1995}
+Gent,~Ian~P. e Walsh,~Toby.
+\newblock (1995).
+\newblock The number partition phase transition.
+\newblock Technical Report RR-95-185, Department of Computer Science,
+  University of Strathclyde, Glasgow, Scotland.
+
+\bibitem[Gent e Walsh(1998)Gent and Walsh]{gent:1998}
+Gent,~Ian~P. e Walsh,~Toby.
+\newblock (1998).
+\newblock Analysis of heuristics for number partitioning.
+\newblock \emph{Computational Intelligence}, v. 14, \penalty0 n. 3, p.
+  \penalty0 430--451.
+
+\bibitem[Graham(1966)]{graham:1966}
+Graham,~Ronald~L.
+\newblock (1966).
+\newblock Bounds for certain multiprocessing anomalies.
+\newblock \emph{THe Bell System Technical Journal}, v. XLV, \penalty0 n. 9, p.
+  \penalty0 1563--1581.
+
+\bibitem[Graham(1969)]{graham:1969}
+Graham,~Ronald~L.
+\newblock (1969).
+\newblock Bounds on multiprocessing timing anomalies.
+\newblock \emph{SIAM journal on Applied Mathematics}, v. 17, \penalty0 n. 2, p.
+  \penalty0 416--429.
+
+\bibitem[Griffiths e Mezo(2010)Griffiths and Mezo]{griffiths:2010}
+Griffiths,~Martin e Mezo,~Istv{\'a}n.
+\newblock (2010).
+\newblock A generalization of stirling numbers of the second kind via a special
+  multiset.
+\newblock \emph{Journal of Integer Sequences}, v. 13, \penalty0 n. 2, p.
+  \penalty0 3.
+
+\bibitem[Hayes(2002)]{hayes:2002}
+Hayes,~Brian.
+\newblock (2002).
+\newblock Computing science: The easiest hard problem.
+\newblock \emph{American Scientist}, v. 90, p. \penalty0 113--117.
+
+\bibitem[Horowitz e Sahni(1974)Horowitz and Sahni]{horowitz:1974}
+Horowitz,~Ellis e Sahni,~Sartaj.
+\newblock (1974).
+\newblock Computing partitions with applications to the knapsack problem.
+\newblock \emph{Journal of the ACM (JACM)}, v. 21, \penalty0 n. 2, p. \penalty0
+  277--292.
+
+\bibitem[Joosten e Zantema(2013)Joosten and Zantema]{joosten:2013}
+Joosten,~Sebastiaan J.~C. e Zantema,~Hans.
+\newblock (2013).
+\newblock Relaxation of 3-partition instances.
+\newblock Cornelissen,~Kamiel; Hoeksma,~Ruben; Hurink,~Johann e Manthey,~Bodo,
+  editors, \emph{12th Cologne-Twente Workshop on Graphs and Combinatorial
+  Optimization, Enschede, Netherlands, May 21-23, 2013}, volume {WP} 13-01 of
+  \emph{{CTIT} Workshop Proceedings}, p. 133--136, (2013).
+
+\bibitem[Karmarkar e Karp(1982)Karmarkar and Karp]{karmarkar:1982}
+Karmarkar,~Narendra e Karp,~Richard~M.
+\newblock (1982).
+\newblock The differencing method of set partition.
+\newblock Report UCB/CSD 81/113, Computer Science Division, University of
+  California, Berkeley, CA.
+
+\bibitem[Karp(1972)]{karp:1972}
+Karp,~Richard~M.
+\newblock (1972).
+\newblock Reducibility among combinatorial problems.
+\newblock Miller,~Raymond~E.; Thatcher,~James~W. e Bohlinger,~Jean~D., editors,
+  \emph{Proceedings of a symposium on the Complexity of Computer Computations,
+  held March 20--22, 1972}, p. 85--103, IBM Thomas J. Watson Research Center,
+  Yorktown Heights, New York, USA. Springer US.
+
+\bibitem[Koji{\'c}(2010)]{kojic:2010}
+Koji{\'c},~Jelena.
+\newblock (2010).
+\newblock Integer linear programming model for multidimensional two-way number
+  partitioning problem.
+\newblock \emph{Computers \& Mathematics with Applications}, v. 60, \penalty0
+  n. 8, p. \penalty0 2302--2308.
+
+\bibitem[Korf(1998)]{korf:1998}
+Korf,~Richard~E.
+\newblock (1998).
+\newblock A complete anytime algorithm for number partitioning.
+\newblock \emph{Artificial Intelligence}, v. 106, \penalty0 n. 2, p. \penalty0
+  181--203.
+
+\bibitem[Korf(2009)]{korf:2009}
+Korf,~Richard~E.
+\newblock (2009).
+\newblock Multi-way number partitioning.
+\newblock \emph{IJCAI}, p. 538--543. Citeseer, (2009).
+
+\bibitem[Korf et~al.(2013)Korf, Schreiber, and Moffitt]{korf:2013}
+Korf,~Richard~E; Schreiber,~Ethan~L e Moffitt,~Michael~D.
+\newblock (2013).
+\newblock Optimal sequential multi-way number partitioning.
+\newblock \emph{International Symposium on Artificial Intelligence and
+  Mathematics (ISAIM-2014)}, (2013).
+
+\bibitem[Korf(2010)]{korf:2010}
+Korf,~Richard~Earl.
+\newblock (2010).
+\newblock Objective functions for multi-way number partitioning.
+\newblock \emph{Third Annual Symposium on Combinatorial Search}, (2010).
+
+\bibitem[Langston(1982)]{langston:1982}
+Langston,~Michael~A.
+\newblock (1982).
+\newblock Improved 0/1-interchange scheduling.
+\newblock \emph{BIT Numerical Mathematics}, v. 22, \penalty0 n. 3, p. \penalty0
+  282--290.
+
+\bibitem[Lima(2004)]{elon:2004}
+Lima,~Elon~Lages.
+\newblock (2004).
+\newblock \emph{An{\'a}lise real}.
+\newblock {IMPA}, Rio de Janeiro, Brasil.
+
+\bibitem[Louren{\c{c}}o et~al.(2003)Louren{\c{c}}o, Martin, and
+  St{\"u}tzle]{lourenco:2003}
+Louren{\c{c}}o,~Helena~R.; Martin,~Olivier~C. e St{\"u}tzle,~Thomas.
+\newblock (2003).
+\newblock Iterated local search.
+\newblock Glover,~Fred e Kochenberger,~Gary~A., editors, \emph{Handbook of
+  Metaheuristics}, p. 320--353. Springer US, Boston, MA.
+
+\bibitem[Mertens(2006)]{mertens:2003}
+Mertens,~Stephan.
+\newblock (2006).
+\newblock The easiest hard problem: Number partitioning.
+\newblock Percus,~A.G.; Istrate,~G. e Moore,~C., editors, \emph{Computational
+  Complexity and Statistical Physics}, p. 125--139, New York. Oxford University
+  Press.
+
+\bibitem[Michiels et~al.(2003)Michiels, Korst, Aarts, et~al.]{michiels:2003}
+Michiels,~Wil; Korst,~Jan; Aarts,~Emile e others,.
+\newblock (2003).
+\newblock Performance ratios for the karmarkar-karp differencing method.
+\newblock \emph{Electronic Notes in Discrete Mathematics}, v. 13, p. \penalty0
+  71--75.
+
+\bibitem[Moffitt(2013)]{moffitt:2013}
+Moffitt,~Michael~D.
+\newblock (2013).
+\newblock Search strategies for optimal multi-way number partitioning.
+\newblock \emph{Proceedings of the Twenty-Third international joint conference
+  on Artificial Intelligence}, p. 623--629. AAAI Press, (2013).
+
+\bibitem[Pedroso e Kubo(2010)Pedroso and Kubo]{pedroso:2010}
+Pedroso,~Jo{\~a}o~Pedro e Kubo,~Mikio.
+\newblock (2010).
+\newblock Heuristics and exact methods for number partitioning.
+\newblock \emph{European Journal of Operational Research}, v. 202, \penalty0 n.
+  1, p. \penalty0 73--81.
+
+\bibitem[Pop e Matei(2013)Pop and Matei]{petrica:2013}
+Pop,~Petric{\u{a}}~C e Matei,~Oliviu.
+\newblock (2013).
+\newblock A memetic algorithm approach for solving the multidimensional
+  multi-way number partitioning problem.
+\newblock \emph{Applied Mathematical Modelling}, v. 37, \penalty0 n. 22, p.
+  \penalty0 9191--9202.
+
+\bibitem[Schreiber(2014)]{schreiber:2014}
+Schreiber,~Ethan~L.
+\newblock \emph{Optimal Multi-Way Number Partitioning}.
+\newblock PhD thesis, University of California Los Angeles, (2014).
+
+\bibitem[Schreiber e Korf(2014)Schreiber and Korf]{korf:2014}
+Schreiber,~Ethan~L e Korf,~Richard~E.
+\newblock (2014).
+\newblock Cached iterative weakening for optimal multi-way number partitioning.
+\newblock \emph{Proceedings of the Twenty-Eighth Annual Conference on
+  Artificial Intelligence (AAAI-14) Quebec City, Canada}, (2014).
+
+\bibitem[Schroeppel e Shamir(1981)Schroeppel and Shamir]{schroeppel:1981}
+Schroeppel,~Richard e Shamir,~Adi.
+\newblock (1981).
+\newblock A ${T}={O}(2^{n/2})$, ${S}={O}(2^{n/4})$ algorithm for certain
+  {NP}-complete problems.
+\newblock \emph{SIAM journal on Computing}, v. 10, \penalty0 n. 3, p. \penalty0
+  456--464.
+
+\bibitem[Sloane(1991)]{sloane:1991}
+Sloane,~NJA.
+\newblock {On-Line Encyclopedia of Integer Sequences}.
+\newblock https://oeis.org/, (1991).
+
+\bibitem[Stanley(1997)]{stanley:1997}
+Stanley,~Richard~P.
+\newblock (1997).
+\newblock \emph{Enumerative Combinatorics. Vol. 1, vol. 49 of Cambridge Studies
+  in Advanced Mathematics}, volume~1 of \emph{Cambridge Studies in Advanced
+  Mathematics}.
+\newblock Cambridge University Press, Cambridge, 2nd edição.
+
+\end{thebibliography}

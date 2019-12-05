@@ -1,0 +1,253 @@
+%-----------------------------------------------------------------------------------------------------------------------------------------
+% MODELO DE PROJETO DE QUALIFICAÇÃO DE MESTRADO
+%
+% CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE MINAS GERAIS | CEFET-MG
+% DEPARTAMENTO DE PESQUISA E PÓS-GRADUAÇÃO | DPPG
+% AUTOR: LINHA DE PESQUISA EM MODELAGEM, APERFEIÇOAMENTO E OTIMIZAÇÃO DE PROCESSOS | MAOP
+%
+% PARTE: INTRODUÇÃO
+%
+% ALUNO: Alexandre Frias Faria
+%-----------------------------------------------------------------------------------------------------------------------------------------
+
+\chapter{Introdução} \label{introducao}
+\markboth{Introdução}{Introdução}
+
+
+Entende-se por partição de um conjunto $S$ a uma coleção de subconjuntos, dois a dois disjuntos, cuja união forma $S$. Uma k-partição ocorre quando a partição tem exatamente $k$ subconjuntos não vazios. Durante o decorrer do texto, os subconjuntos pertencentes à partição são denominados de partes.
+
+O Problema da Partição de Números (\emph{Two-Way Number Partitioning Problem} -- TWNPP) já foi chamado de ``\emph{O mais fácil problema NP-completo}'' por \citet{hayes:2002}, mas os problemas generalizados que derivam dele são muito mais complicados. Variações menos gerais desse problema se limitam a encontrar uma partição com partes de tamanho fixo, como o {\em 3-Partition Problem}, encontrado em \citet{joosten:2013}, ou mudam o objetivo original para um problema de escalonamento, como em \citet{moffitt:2013}.
+
+Embora seja um dos 21 problemas de classe NP-completos discutidos por  \citet{karp:1972}, existem algoritmos exatos para o TWNPP, como em \citet{schroeppel:1981}, \citet{horowitz:1974} e \citet{korf:1998}), como também muitos algoritmos aproximados aplicáveis  ao problema analisados em \citet{gent:1998} e \citet{kann:2003}.
+
+
+
+
+\section{Apresentação Inicial} \label{apres}
+\markboth{Apresentação Inicial}{Apresentação Inicial}
+
+%=======================================\cite{elon:2004}
+Os conceitos de norma, diâmetro e bola são importantes para melhor compreensão da Seção \ref{apres} pois com eles é possível enunciar todos os problemas das Subseções \ref{npp}, \ref{mwnpp}, \ref{mdtwnpp} e \ref{mdmwnpp} mantendo a mesma natureza da função objetivo. Esses conceitos podem se encontram formalmente descritos em \cite{elon:2004}. 
+
+\begin{defi}
+Uma função $\left\|.\right\|_p :\mathbb{R}^n \to \mathbb{R}^{+}$ é uma norma de $\mathbb{R}^n$ se para quaisquer $x,y\in\mathbb{R}^n$ e $a\in\mathbb{R}$:
+\begin{itemize}
+	\item $\left\|x\right\|_p=0\Rightarrow x=\vec{0}$
+	\item $\left\|a.x\right\|_p = |a|.\left\|x\right\|_p$
+	\item $\left\|x+y\right\|_p\leq \left\|x\right\|_p +\left\|y\right\|_p$
+\end{itemize}\fim
+\end{defi}
+
+Nesse texto usa-se $p\to \infty$, ou seja, a norma do máximo que retorna a maior coordenada do vetor.
+
+
+\begin{defi}
+Dados dois vetores $x,y\in\mathbb{R}^n$. A distância ente $x$ e $y$ é dada por $d(x,y)=\left\|x-y\right\|_p$.\fim
+\end{defi}
+
+\begin{defi}
+Dado um subconjunto $X\subset\mathbb{R}^n$. O diâmetro de $X$ é  $diam(X)=\max_{x_1,x_2\in X}\{d(x_1, x_2)\}$.\fim
+\end{defi}
+
+\begin{defi}
+Dado um ponto $v_0\in\mathbb{R}^n$ e um número real positivo $r$. Uma bola de cetro $v_0$ e raio $r$ é o conjunto de pontos $v\in\mathbb{R}^n$ tais que $\left\|x-x_0\right\|_p \leq r$.\fim
+\end{defi}
+
+O diâmetro de um conjunto é duas vezes o raio da menor bola que contém todos os elementos deste conjunto.
+
+%======================================================
+
+Com o objetivo de apresentar o Problema da k-Partição de Números, nesta seção mostra-se uma sequência de outros problemas diretamente relacionados com o mesmo. Nota-se que é possível enunciar, genericamente, todos os problemas abaixo da seguinte forma:
+
+\begin{defi}\label{geralnpp}
+Dado um conjunto $S$ de $n$ vetores $v \in \mathbb{Z}_{+}^m$ e um inteiro $k$, o objetivo é encontrar uma partição de $S$ com dimensão $k$,  de modo que as somas dos elementos de cada parte fiquem contidas dentro da menor bola possível. Assim, espera-se minimizar o o raio dessa bola (o diâmetro do conjunto)\fim
+\end{defi}
+
+
+
+Em seguida, mostra-se um enunciado com exemplo para cada versão abaixo.
+
+\subsection{Problema da Partição de Números}\label{npp}
+
+O Problema da Partição de Números (\emph{Two-Way Number Partitioning Problem} -- TWNPP) é a tarefa de minimizar a diferença das somas de dois subconjuntos disjuntos de um conjunto $S$. Essa é a versão mais simples e popular do problema apresentada por \citet{karp:1972} e tratada em diversos artigos, como \citet{pedroso:2010} e \citet{gent:1998}. O tamanho da bola, nesse caso, é o comprimento do intervalo formado pelo resultado das duas somas. O exemplo \ref{ex1} mostra essa situação.
+
+\begin{exem} \label{ex1}
+O conjunto $S=\{87, 6, 5, 45, 34, 2, 24, 12, 7, 6, 54, 34\}$ pode ser particionado em:
+
+\[
+\underbrace{\{87, 34, 24, 6, 5\}}_{soma=156},\underbrace{\{54, 45, 34, 12, 7, 6, 2\}}_{soma=160}
+\] 
+
+O valor da função objetivo dessa partição é $160-156=4$, mas a partição ótima é
+\[
+\underbrace{\{87, 34, 24, 6, 5, 2\}}_{soma=158},\underbrace{\{54, 45, 34, 12,  7, 6\}}_{soma=158}
+\] 
+
+\noindent com valor de função objetivo $158-158=0$.\fim
+
+\end{exem}
+
+O enunciado matemático do Problema da Partição de Números consiste em encontrar um conjunto $A\neq\emptyset$ que minimize a função:
+
+\begin{equation}
+f(A)=\left|\sum_{x\in A}x - \sum_{x\in S\setminus A}x\right| \label{eq1}
+\end{equation}
+
+A partir desse problema, encontram-se duas generalizações distintas, abordadas nos tópicos a seguir.
+
+\subsection{Problema da k-Partição de Números}\label{mwnpp}
+
+Esta primeira generalização do TWNPP é o Problema da k-Partição de Números (\emph{Multi-way Number Partitioning Problem} -- MWNPP), que expande o número de subconjuntos nos quais se pretende distribuir o conjunto $S$.
+
+Dado um conjunto numérico $S$, o objetivo é encontrar uma partição de dimensão $k$, de modo que as somas dos elementos de cada parte sejam as mais próximas possíveis umas das outras. Isso se resume a ter a parte de maior soma  se aproximando da parte de menor soma tanto quanto for possível. Os textos que abordam essa versão são, dentre outros, \citet{karmarkar:1982}, \citet{korf:2009}, \citet{korf:2013}. Um trabalho recente de forte interesse, pela sua completude, é  \citet{schreiber:2014}. 
+
+O exemplo a seguir mostra uma situação desse problema.
+
+\begin{exem} \label{exe11}
+O conjunto $S=\{87, 6, 5, 45, 34, 2, 24, 12, 7, 6, 54, 34\}$ pode ser particionado para $k=3$ em:
+
+\[
+\underbrace{\{87,12,6\}}_{soma=105}, ~\underbrace{\{45,34,6,24\}}_{soma=109}, ~\underbrace{\{5,7,2,54,34\}}_{soma=102}
+\] 
+O valor da função objetivo dessa partição é $109-102=7$, mas a partição ótima é
+\[
+\underbrace{\{87,12,6\}}_{soma=105}, ~\underbrace{\{45,34,2,24\}}_{soma=105}, ~\underbrace{\{5,7,6,54,34\}}_{soma=106}
+\] 
+\noindent com valor de função objetivo $106-105=1$. Observe que as partes possuem dimensões (número de elementos) diferentes. \fim
+\end{exem}
+
+A entrada é um conjunto $S$ e um inteiro positivo $k$ e a saída é uma partição de $S$, na forma $\{A_1, A_2, ..., A_k\}$. O objetivo é minimizar a função:
+\begin{equation}
+f(\{A_1, A_2, ..., A_k\})=\max_{i} \left\{ \sum_{x\in A_i}x \right\} - \min_{j} \left\{ \sum_{x\in A_j}x \right\} \label{eq2}
+\end{equation}
+
+A função \ref{eq2} é uma versão simplificada do diâmetro de um conjunto com $k$ números reais $\displaystyle\sum_{x\in A_j}x$ mostrada abaixo.
+
+\begin{equation}
+f(\{A_1, A_2, ..., A_k\})=\max_{(i,j)} \left\{ \sum_{x\in A_i}x - \sum_{x\in A_j}x \right\} \label{eq0}
+\end{equation}
+
+
+
+\subsection{Problema Multidimensional da Partição de Números}\label{mdtwnpp}
+
+A segunda generalização do (TWNPP) é o Problema Multidimensional da Partição de Números  (\emph{Multidimensional Two-Way Number Partitioning Pro\-blem} -- MDTWNPP). Este problema transforma um conjunto $S$ de inteiros  em um conjunto de vetores inteiros $S=\{v_i\in \mathbb{Z}^{m}_{+}:\quad \forall i \in\{1,2,3,...,n\}\}$. Para definir este problema, faz-se necessário o uso de uma norma em $\mathbb{R}^{m}$.
+
+Seu enunciado matemático, proposto por \citet{kojic:2010}, é muito parecido com o (TWNPP), porém, após somar os elementos de cada um dos subconjuntos, tem-se um vetor, cuja norma será o valor do objetivo. A busca é um conjunto $A\neq\emptyset$ que minimize a função:
+
+\begin{equation}
+f(A)=\left\|\sum_{x\in A}x - \sum_{x\in S\setminus A}x \right\|_{p}
+\label{eq32}
+\end{equation}
+
+Quando $p\to\infty$, a função $f(\cdot)$ retorna a maior coordenada do vetor $\displaystyle\sum_{x\in A}x - \displaystyle\sum_{x\in S\setminus A}x$ sendo equivalente a função objetivo do artigo citado.
+
+Seja $ v\in \mathbb{Z}_{+}^m$ e $v_{ij}$ com $i$ indexando o vetor $v$ variando de $1$ até $n$ e $j$ sendo a coordenada do vetor $v$ e vai de $1$ até $m$. O conjunto $I_n$ é o conjunto dos índices $i$ e a variável de decisão $B$ é um subconjunto de $I_n$.
+
+\begin{equation}
+f(B)=\max_{j} \left\{ \sum_{i\in I_n\setminus B}v_{ij} - \sum_{i\in B}v_{ij} \right\} \label{eq}
+\end{equation}
+
+\begin{exem}
+O conjunto
+\[
+\begin{array}{l}
+S=\left\{ (8,3,6,3),(8,3,12,3),(8,3,0,3),(17,5,10,5),(10,5,10,5), \right. \\
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\left. (10,5,10,3),(8,3,6,1),(5,3,6,3) \right\}
+\end{array}
+\]
+\noindent  com $m=4$ e $k=2$ tem pode ser particionado como:
+
+\[
+\begin{array}{rcl}
+A_1 & = & \underbrace{\{(17,5,10,5),(8,3,0,3),(10,5,10,5),(10,5,10,3)\}}_{soma=(45,18,30,16)},\\ \\
+A_2 & = & \underbrace{\{(8,3,6,3),(8,3,12,3),(8,3,6,1),(5,3,6,3)\}}_{soma=(29,12,30,10)}
+\end{array}
+\]
+\noindent com um valor de função objetivo $\max\{|(45,18,30,16)-(29,12,30,10)|\}=\max\{|(16,6,0,6)|\}=16$, mas tem partição ótima
+\[
+\begin{array}{rcl}
+A_1 & = & \underbrace{\{(17,5,10,5),(10,5,10,5),(10,5,10,3)\}}_{soma=(37,15,30,13)},\\ \\
+A_2 & = & \underbrace{\{(8,3,6,3),(8,3,12,3),(8,3,0,3),(8,3,6,1),(5,3,6,3)\}}_{soma=(37,15,30,13)}
+\end{array}
+\]
+\noindent com valor de função objetivo $\max\{|(37,15,30,13)-(37,15,30,13)|\}=\max\{|(0,0,0,0)|\}=0$\fim
+\end{exem}
+
+
+\subsection{Problema Multidimensional da k-Partição de Números}\label{mdmwnpp}
+
+O Problema Multidimensional da k-Partição de Números (\emph{Multidimensional Multi-Way Number Partitioning Problem} -- MDMWNPP é uma generalização tanto do (MWNPP) quanto do (MDTWNPP). Neste problema, um conjunto de vetores de $\mathbb{Z}^{m}_{+}$ deve ser dividido em $k$ conjuntos, de modo que o diâmetro desses $k$ vetores resultantes seja o menor possível. O exemplo \ref{exx} ilustra essa situação.
+
+\begin{exem} \label{exx}
+Seja o conjunto:
+\[
+\begin{array}{ccl}
+S & = & \left\{(37,15,30,13),(8,3,6,3),(8,3,12,3),(8,3,0,3),(17,5,10,5), \right. \\
+  & & ~~~~~~~~~~~~~~~~~~~~~~~~~~\left. (10,5,10,5),(10,5,10,3),(8,3,6,1),(5,3,6,3) \right\}
+\end{array}
+\]
+\noindent Para $m=4$ e $k=3$, pode ser particionado em:
+
+\[
+\begin{array}{rcl}
+A_1 & = & \underbrace{\{(17,5,10,5),(10,5,10,5),(10,5,10,3)\}}_{soma=(37,15,30,13)},\\ \\
+A_2 & = & \underbrace{\{(37,15,30,13), (8,3,0,3)\}}_{soma=(45,18,30,16)},\\ \\
+A_3 & = & \underbrace{\{(8,3,6,3),(8,3,12,3),(8,3,6,1),(5,3,6,3)\}}_{soma=(29,12,30,10)}
+\end{array}
+\]
+
+\noindent com valor de função objetivo:
+\[
+\begin{array}{ccl}
+\max\{|(45,18,30,16)-(29,12,30,10)|, |(37,15,30,13)-(29,12,30,10)|,\\ |(45,18,30,16)-(37,15,30,13)|\}=\max\{|(16,6,0,6)|, |(8,3,0,3)|, |(8,3,0,3)|\}=16
+\end{array}
+\]
+\noindent mas com partição ótima:
+\[
+\begin{array}{rcl}
+A_1 & = & \underbrace{\{(17,5,10,5),(10,5,10,5),(10,5,10,3)\}}_{soma=(37,15,30,13)},\\ \\
+A_2 & = & \underbrace{\{(37,15,30,13)\}}_{soma=(37,15,30,13)},\\ \\
+A_3 & = & \underbrace{\{(8,3,6,3),(8,3,12,3),(8,3,0,3),(8,3,6,1),(5,3,6,3)\}}_{soma=(37,15,30,13)}
+\end{array}
+\]
+\noindent com valor de função objetivo igual a $0$ pois todas as partes tem igual soma. Sendo assim o diâmetro desse conjunto é a maior coordenada de $3$ vetores nulos.\fim
+\end{exem}
+
+Ou seja, o objetivo é equivalente a minimizar a maior distância entre dois de todos os vetores, dada pela expressão:
+
+\begin{equation}
+f(\{A_1,A_2,...,A_k\}) = \max_{(i,j)} \left\{ \left\| \sum_{x \in A_i} x  - \sum_{x \in A_j} x \right\|_p \right\}
+\label{eq31}
+\end{equation}
+
+A expressão (\ref{eq31}) pode ser utilizada como a função objetivo de qualquer um dos problemas enunciados acima, seja do Problema apresentado na Seção \ref{npp}, seja do Problema apresentado na Seção \ref{mdmwnpp} atual, sem qualquer inconsistência.
+
+O trabalho de \citet{petrica:2013} adapta um outro modelo para o MDMWNPP, a partir da formulação matemática apresentada em \citet{kojic:2010} para o MDTWNPP mostrado na Subseção \ref{mdtwnpp}.
+
+Seja $ v_i \in \mathbb{Z}_{+}^m$ e $ V_l=\displaystyle\sum_{v_i\in A_l}v_i $. A função objetivo é a maior diferença entre duas coordenadas de $V_{l_1}$ e $V_{l_2}$ com $l_1\neq l_2$, na forma:
+
+\begin{equation}
+f(\{A_1,A_2,...,A_k\})=\max_{j}\left\{ \left| \max_{l} \sum_{i\in A_l} v_{ij} - \min_{l} \sum_{i\in A_l} v_{ij} \right| \right\} \label{eq3}
+\end{equation}
+Nesta expressão, $l$ indexa as partes e vai de $1$ até $k$; $i$ vai de $1$ até $n$ e indexa o vetor $v$ dentro da parte $A_l$; $j$ é a coordenada do vetor $v$ e vai de $1$ até $m$.
+
+Note que, ao contrário de todos os enunciados até aqui, a expressão (\ref{eq3}) não é igual à expressão (\ref{eq31}) quando $p\to\infty$. Esta formulação está fora do padrão da Definição \ref{geralnpp}.
+
+
+A Figura \ref{figura1} resume as relações entre os quatro problemas apresentados.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.4\linewidth]{chart}
+\caption{Relações entre os 4 problemas.}
+\label{figura1}
+\end{figure}
+
+%\newpage
+\section{Organização do Projeto}
+\markboth{Organização do Projeto}{Organização do Projeto}
+
+O restante do texto está organizado segundo os comentários em cada capítulo a seguir. No Capítulo \ref{problema}, mostra-se o problema tratado com uma visão mais detalhada, usando enunciado, modelo matemático proposto e uma visão mais teórica sobre como encontrar suas soluções. O Capítulo \ref{teorica} contém algoritmos para problemas auxiliares aos métodos propostos do Capítulo \ref{algoritmos}. O Capítulo \ref{revisao} contém um histórico de trabalhos sobre temas relacionados ao mesmo problema tratado nesse texto. O Capítulo \ref{algoritmos} apresenta algoritmos propostos já implementados e testados, junto com possíveis abordagens ainda não definitivas. Apresenta-se o que é esperado para as propostas desse trabalho no Capítulo \ref{objetivo}. Um conjunto de metas até a defesa da dissertação está no Capitulo \ref{cronograma}. Os resultados do Capítulo \ref{resultados} são preliminares e se encontram publicados.
+
+

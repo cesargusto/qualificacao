@@ -1,0 +1,172 @@
+
+
+\chapter{Algoritmos Propostos para a solução do Problema da k-Partição de Números} \label{algoritmos}
+\markboth{Algoritmos Propostos}{Algoritmos Propostos}
+
+Este capítulo apresenta Algoritmos heurísticos e exatos propostos para a solução do Problema da k-Partição de Números (MWNPP). O Capítulo é iniciado com Seção \ref{alg-geral}, em que uma proposta de algoritmo geral para a solução do Problema da k-Partição de Números é introduzido. Em seguida, a Seção \ref{kpart-ils} mostra uma proposta de adaptação da meta-heurística \emph{Iterated Local Search} (ILS) para a solução do problema em análise. Por fim, a Seção ref{kpart-exato} mostra uma proposta de algoritmo exato para a solução do Problema da k-Partição de Números. 
+
+\section{Algoritmos} \label{alg-geral}
+
+Seja $S$ um conjunto de números e considere a existência de um algoritmo, denominado $part_2(S)$, que resolve o Problema de Partição de Números (TWNPP) e um algoritmo, $part_1(S,k)$, que encontra uma solução inicial para o (MWNPP). É possível, então, propor um algoritmo, inspirado no Algoritmo 0/1-\emph{Interchange}, mostrado no Algoritmo \ref{algoritmo3} da Seção \ref{interchange}, que solucione o Problema da k-Partição de Números (MWNPP).
+
+O Algoritmo \ref{algoritmo8} contempla esta proposição, sendo uma proposta de solução geral para o Problema da k-Partição de Números. \\
+ 
+\begin{algorithm}[H]\label{algoritmo8}
+\Entrada{Um conjunto $S$ com $n$ elementos, $part_1$, $part_2$ e um inteiro $k$}
+\Saida{K-Partição do conjunto $S$}
+\Inicio{
+	$\{A_1, ..., A_k\}=part_1(S,k)$\;
+
+	\Repita{$obj==\displaystyle\max_{i}\left\{\sum_{x\in A_i}x\right\}-\displaystyle\min_{j}\left\{\sum_{x\in A_j}x\right\}$}{\nllabel{l1}
+		$obj=\displaystyle\max_{i}\left\{\sum_{x\in A_i}x\right\}-\displaystyle\min_{j}\left\{\sum_{x\in A_j}x\right\}$\;
+	    Encontre $A_i=\arg\displaystyle\max_{i}\left\{\sum_{x\in A_i}x\right\}$ e $A_j= \arg\displaystyle\min_{j}\left\{\sum_{x\in A_j}x\right\}$\; 
+		$X=A_i\cup A_j$\;
+		$\{A_i , A_j\}=part_2(X)$\;
+	}
+}
+\caption{Algoritmo de solução Geral para o (MWNPP)}
+\end{algorithm}
+
+
+Após a linha \ref{l1} do Algoritmo \ref{algoritmo8} descrito acima, pode-se listar dois casos: (i) a parte da maior soma fica menor e a parte de menor soma fica maior ou (ii) ambas as partes permanecem inalteradas. Enquanto o primeiro caso ocorre, a função objetivo  do problema decresce. Portanto, o ótimo ainda não foi encontrado. 
+
+Observe que o Algoritmo \ref{algoritmo8} é um algoritmo geral para a solução do Problema da k-Partição de Números. O algoritmo  $part_2$ é parte desse algoritmo geral assim como o $part_1$ que retorna uma solução inicial. O Algoritmo \ref{algoritmo8} cumpre a função de gerar a partição do conjunto que leve à uma solução viável do (MWNPP). Qualquer método que execute as funções de $part_1$ e $part_2$ pode vir a ser implementado, seja um método exato, uma heurística ou uma meta-heurística. 
+
+A Seção \ref{kpart-ils} apresenta uma adaptação da meta-heurística (ILS), mostrada em sua versão geral no Algoritmo \ref{algoritmo5} da Seção \ref{ils}, para  atuar com a função do algoritmo $part_2$. 
+
+%------------------------------------------------------------------
+
+\section{Adaptação do ILS para a Solução do Problema da k-Partição de Números} \label{kpart-ils}
+
+Esta seção apresenta a adaptação da meta-heurística \emph{Iterated Local Search} (ILS) para a etapa de execução do método $part_2$ do algoritmo geral de solução constituído pelo Algoritmo \ref{algoritmo8}.
+
+Com uma solução inicial já bem aproximada para o problema, basta encontrar uma boa estratégia para rearranjar alguns elementos e buscar uma solução ainda melhor. O refinamento acontece pela busca de um elemento a ser realocado, na parte de maior soma busca-se o elemento mais próximo da metade do valor da função objetivo para partição atual. O mesmo se faz na parte de menor soma, porém, buscando um elemento cuja diferença com outro da parte de maior soma se aproxime da metade do valor da função objetivo atual.
+
+
+\subsection{Movimento e Vizinhança}
+
+O movimento de realocação sempre aproxima a parte de maior soma, encolhendo-a, da parte de menor soma, aumentando-a. O movimento $m_{i,j}$ significa que um elemento sai da parte de índice $i$ e vai para parte de índice $j$. Assim, gera-se a vizinhança de $s$, na forma: 
+\begin{equation}
+N(s)= \left\{ s' ~: ~ s' \leftarrow s \oplus m_{i,j}, ~~ \forall i \in A \right\}
+\end{equation}
+
+A dimensão da vizinhança é $|A|$. Essa operação é a perturbação do (ILS) descrito no Algoritmo \ref{algoritmo5} na Seção \ref{ils} do Capítulo \ref{teorica}.
+
+\subsection{Estratégia de Realocação}
+
+A ideia principal do método é testar, dentre todos os elementos da parte de maior soma, aqueles que mais reduzem o valor da função objetivo. Essa busca gera um subproblema, que consiste em encontrar:
+\begin{eqnarray}
+\max_{a_i\in A_{\max}}& & \{a_i\} \label{rrr} \\
+& & a_i \leq \frac{1}{2}\left(\sum_{x\in A_{\max}}x - \sum_{x\in A_{\min}}x\right) \label{rrr1}
+\end{eqnarray}
+
+A ideia secundária é testar, dentre todos os elementos $a_i$, da parte de maior soma, e $b_j$, da parte de menor soma, aqueles que mais aumentam a função objetivo. Para isso, troca-se os dois elementos cuja diferença seja a mais próxima possível da metade do valor da função objetivo. Essa busca gera um subproblema, que consiste em encontrar:
+\begin{eqnarray}
+\min_{a_i\in A_{\max},b_j\in A_{min}} && \{a_i -b_j\} \label{rrr3}\\
+&& a_i -b_j \leq \frac{1}{2}\left(\sum_{x\in A_{\max}}x - \sum_{x\in A_{\min}}x\right) \label{rrr4}
+\end{eqnarray}
+
+A solução desses problemas aponta os elementos que devem ser trocados ou realocados. Essa operação é a busca local do (ILS) descrito no Algoritmo \ref{algoritmo5} na Seção \ref{ils} do Capítulo \ref{teorica}.
+
+\subsection{Critérios de Parada}
+
+Os movimentos continuam enquanto houver possibilidade de melhora da função objetivo pelo movimento. Caso contrário o algoritmo para. Esse critério evita ciclos, reconhecendo trocas já realizadas.
+
+\subsection{Implementação}
+
+O (ILS) deve ser usado no lugar da função $part_2$ dentro do algoritmo \ref{algoritmo8}, já que este opera trocas e realocações somente entre a parte de maior e menor soma. O Algoritmo \ref{hashils} atualiza suas entradas realocando um ou dois elementos de $X_1$ para $X_2$ ou trocando dois elementos entre essas partes. Após reduzir o custo da função objetivo, ele retorna  ao Algoritmo \ref{algoritmo8}, que, por sua vez, recalcula as novas partes de maior e menor soma.
+
+\begin{algorithm}[H] \label{hashils}
+	\SetAlgoLined
+	\Entrada{$\{X_1, X_2\}, obj$}
+	\Saida{$\{X_1, X_2\}, obj$}
+	\Inicio{
+		$obj1=obj$\;
+			\Para{$a\in X_1$}{
+				$troco=a-obj1/2$\;
+				\Se{$troco>0$}{
+					$s1=\emph{busca-remove}(a, X_1)$\;
+					$s2=\emph{busca-remove}(troco, X_2)$\;
+					$insere(s1, X_2)$\;
+					$insere(s2, X_1)$\;
+					$obj=obj-(s1-s2)$\;
+				}
+				\SenaoSe{$troco<0$}{
+					$s1=\emph{busca-remove}(a, X_1)$\;
+					$s2=\emph{busca-remove}(-troco, X_1)$\;
+					$insere(s1, X_2)$\;
+					$insere(s2, X_2)$\;
+					$obj=obj-(s1+s2)$\;
+				}
+				\Senao{
+					$s1=\emph{busca-remove}(a, X_1)$\;
+					$insere(s1, X_2)$\;
+					$obj=obj-s1$\;
+				}
+			}
+		\Retorna{$\{X_1, X_2\}, obj$}
+	}
+	\caption{Adaptação do (ILS) para a solução do Problema da k-Partição de Números}
+\end{algorithm}
+
+A função $busca-remove(a,S)$ procura o maior elemento menor ou igual $a$ numa lista encadeada. Por isso, os dados de $X_1$ e $X_2$ são armazenados numa tabela {\em hash} afim de amortizar o custo dessa busca. A função {\em hash} usada na tabela tem as propriedades de um histograma, mantendo elementos de um determinado intervalo dentro da mesma posição.
+
+Seja o conjunto $S$ com todos os seu elementos contidos no intervalo $(a,b)$. Para alocar os elementos de $S$ numa tabela com tamanho $m$ usa-se a função:
+
+\begin{equation}
+hash(x)=floor(m.\frac{(x-a)}{(b-a)})
+\end{equation}
+
+Como as instâncias tem distribuição uniforme, espera-se que as listas em cada posição da tabela contenham $\frac{n}{m}$ elementos. Essa propriedade acelera a busca pela variável \texttt{troca}, permitindo que o algoritmo tenha uma complexidade amortizada de $O(n)$.
+
+\section{Algoritmos Exatos} \label{kpart-exato}
+
+É possível resolver o (MWNPP) com um algoritmo exato para o Problema da Soma de Subconjuntos. A ideia é obter uma parte com a suma mais próxima de $\displaystyle\frac{1}{k}\sum_{x\in S}x$,  retira-la de $S$, decrementar $k$ e fazer isso até $S=\emptyset$.
+
+\begin{algorithm}[H]\label{algoritmo10}
+	\Entrada{ Conjunto $S$ e inteiro $k$, $subsetsum(S,c)$}
+	\Saida{K-Partição do conjunto $S$, $\{A_1, A_2, ..., A_k\}$}
+	\Inicio{
+		\Se{$S=\emptyset$}{
+			break\;
+		}
+		$A_k=subsetsum(S,\frac{1}{k}\sum_{x\in S}x)$\;
+		$S=S\setminus A_k$\;
+		$\{A_1, A_2, ..., A_{k-1}\}=kpart(S,k-1)$\;
+
+		\Retorna{$\{A_1, A_2, ..., A_k\}$}\;
+	}
+	\caption{O algoritmo, denominado $kpart(S,k)$ retorna parte a parte usando, k vezes, um algoritmo exato para o Problema da Soma de Subconjuntos}
+\end{algorithm}
+
+
+Em muitos casos isso é inviável porque usa um algoritmo exponencial $k$ vezes. Caso a instância seja livre de partições perfeitas, com valor de função objetivo igual a $0$, o Algoritmo \ref{algoritmo10} pode falhar. 
+
+Um método correto de programação dinâmica é considerar a função $f(i,sum_j)$ a solução ótima do (MWNPP) usando os $i$ primeiros elementos de $S$ com a soma da parte $j$ igual a $sum_j$ para cada $j\in\{1,...,k-1\}$. Pode-se escrever esta função da seguinte maneira:
+
+\begin{equation}\label{dinamic}
+f(i,sum_j)=\min_{1\leq l\leq k-1}\{f(i-1,sum_{j\neq l}\cup sum_l -a_i), f(i-1,sum_j)\}
+\end{equation}
+
+Esta equação de recorrência \ref{dinamic} informa que $f(i,sum_j)$ é o menor valor de todos os subproblemas $f(i-1,sum_{j\neq l}\cup sum_l -a_i)$, supondo que o elemento $a_i$ está na parte $l$ para cada $l\in\{1,..., k-1\}$, ou o subproblema $f(i-1,sum_j)$ que indica que elemento $a_i$ está na parte $k$, segundo . A solução procurada será $f(n,sum_j)$. Esse método é inviável caso os elementos de $S$ tenham muitos algarismos.
+
+Porém, existem outros métodos exatos que conseguem escapar, em parte, da busca exaustiva reconhecendo buscas irrelevantes. Veja o exemplo de uma árvore de busca que enumera as k-partições de um conjunto na figura \ref{figura3}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width= 0.55\linewidth]{./cga3}
+	\caption{Exemplo de árvore de busca ara o (MWNPP): $|S|=4$ e $k=3$}
+	\label{figura3}
+\end{figure}
+
+Também parece um método impraticável, mas algumas boas ideias ainda podem melhorá-lo.
+
+A maior vantagem das heurísticas simples, com baixa complexidade, é que elas são uma parte importante dos métodos exatos de enumeração implícita. Uma heurística construtiva pode ser aplicada dentro de um algoritmo exato para gerar limites superiores enquanto uma relaxação serve para encontrar limites inferiores. Seja $H(I)$ uma heurística, $R(I)$ uma relaxação e $Opt(I)$ o ótimo global para o problema de minimização $I$. Conclui-se que
+
+\begin{equation}\label{equa1}
+R(I)\leq Opt(I) \leq H(I)
+\end{equation}
+
+Logo, a combinação inteligente dessas duas coisas pode gerar cortes numa árvore de busca e acelerar muito um método de enumeração implícita.
+
+Se um valor $R(I)$ construído a partir de um nó, $x$, num determinado nível da árvore de busca for maior que o menor dos $H(I)$, corta-se a ramificação desse nó por contradição com as Inequações \ref{equa1} e o mesmo vale para . Esta ideia evita que a árvore de busca cresça como na Figura \ref{figura3}.

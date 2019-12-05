@@ -1,0 +1,73 @@
+%ok
+
+\chapter{Revisão Bibliográfica} \label{revisao}
+\markboth{Revisão Bibliográfica}{Revisão Bibliográfica}
+
+Neste capítulo, apresentam-se os trabalhos correlatos disponíveis na literatura. Prioriza-se um conjunto de artigos e livros mais ligados as ideias usadas no capítulo \ref{algoritmos} e os trabalhos mais importantes. Na seção \ref{historico}, descrevem-se as publicações relacionadas ao (MWNPP) desde a origem até as mais recentes. Na seção \ref{panorama}, apresenta-se um panorama temporal, classificando as técnicas adotadas nos trabalhos correlatos por autor e ano.
+
+\section{Histórico}\label{historico}
+
+Existe uma vasta literatura sobre a solução do Problema da Partição de Números e suas variações. Ele foi listado de modo formal no trabalho de \cite{karp:1972} como um dos 6 problemas NP-completos básicos e, mais tarde, por \cite{garey:1979}. Ambos demonstram uma série de equivalências entre o (NPP) e outros problemas NP-completos.
+
+O (MWNPP) aparece explicitamente num artigo sobre a análise de uma heurística construtiva, {\em Differencing Method}, mais conhecida como Heurística de Kamarkar-Karp proposta por \cite{karmarkar:1982} focada na ideia de dividir os maiores números em partes distintas, inserindo as diferenças entre os elementos retirados do conjunto dos não alocados. Este é o artigo mais citado sobre o (MWNPP) até hoje. Os autores demonstram vários resultados sobre a eficiência da heurística proposta e sobre a dificuldade das instâncias do problema.
+
+Mais tarde, \cite{michiels:2003} demonstra uma razão de aproximação menor ou igual a $\frac{4}{3}-\frac{1}{3(k-1)}$,  similar a do (LPT) descrito na seção \ref{graham}, para a Heurística de Karmakar-Karp. Isso põe os resultados obtidos com a Heurística de Karmarkar-Karp dentro de um intervalo de erro limitado.
+
+Existe, também, um ramo de estudo do interesse da física estatística. Muitos são motivados pela análise do problema feita por \cite{karmarkar:1982}. Esses trabalhos pesquisam uma forma de classificar as instâncias do (TWNPP) e seus relativos, buscando uma metodologia que garanta um conjunto livre de partições perfeitas. Partições perfeitas são quelas que tem um valor ótimo de função objetivo igual a $0$ ou $1$. Percebe-se que uma instância com muita variedade de partições perfeitas poderia ser resolvida até mesmo por uma enumeração ingênua porque não existem valores de função objetivo menores para se encontrar. Os trabalhos que apresentam essa pesquisa são: \cite{gent:1995}, mostrando a transição de fases para a identificar as características de uma instância livre de partições perfeitas; \cite{mertens:2003}, promove um avanço no trabalho de Gent em 1995 mostrando uma nova fórmula que classifica instâncias quase certamente livres de partições perfeitas e \cite{ferreira:2001}, que apresenta uma nova equação para o valor esperado da função objetivo do (TWNPP).
+
+
+Alguns trabalhos como \cite{gent:1998} e \cite{berretta:1999} mostram que o (TWNPP) é um problema muito difícil para meta-heurísticas de uso geral como Algoritmo Genético, {\em Simulated Annealing} e outros. Em muitos casos esses métodos perdem em tempo e desempenho para a Heurística de Kamarkar-Karp e até mesmo para um algoritmo guloso, (LPT), como. Alguns textos mais recentes de \cite{kojic:2010} e \cite{petrica:2013} usam várias classes de meta-heurísticas em versões mais pesadas do Problema da Partição de Números como o (MDTWNPP) e (MDMWNPP), mas também não mostram resultados muito significativos exceto pela formulação matemática.
+
+
+Tanto para o (TWNPP) quanto pata o (MWNPP), sempre houve a possibilidade de usar os algoritmos de \cite{horowitz:1974} e \cite{schroeppel:1981} fazendo a conversão para o Problema da Mochila, mas o espaço de memória requerido é inviável para problemas de maior cardinalidade. Uma nova abordagem surgiu quando \cite{korf:1998} propôs um algoritmo exato fazendo um procedimento {\em Backtrack} em heurísticas construtivas como o LPT e a Heurística de Karmarkar-Karp, {\em Complete Greedy Algorithm} e {\em Complete Karmarkar-Karp Algorithm } respectivamente.  primeira melhoria desses trabalhos acontece {\em Recursive Number Partitioning} proposto por \cite{korf:2009}. A segunda melhoria é a contribuição de \cite{pedroso:2010}. Uma nova estrutura de dados aplicada ao trabalho de Korf agilizando a busca na Árvore de Kamarmar-Karp. A discussão sobre a função objetivo do (MWNPP) por \cite{korf:2010} mostra as diferenças dos objetivos de seus artigos e do de Karmarkar e Karp em 1972. Por meio de sucessivas conversões do (MWNPP) de uma partição de tamanho $k-1$ para $k$ \cite{moffitt:2013} propõe um algoritmo baseado em programação dinâmica. Atualmente o estado da arte são os algoritmos  {\em Sequential Number Partitioning} do artigo de \cite{korf:2013} e o {\em Cached Iterative Weakening} encontrado em \cite{korf:2014}. Um trabalho completo e de grande interesse sobre esses algoritmos com todos os detalhes encontra-se em \cite{schreiber:2014}. 
+
+\section{Panorama}\label{panorama}
+
+A tabela \ref{hist} segue a ordem cronológica das publicações mais relevantes sobre o (MWNPP)
+
+\begin{itemize}
+	\item Objetivos: MmaxP - minimizar a parte com maior soma, MminP - maximizar a parte com menor soma, MdianP - minimizar o diâmetro das somas das partes, Mpitem - maximizar o valor dos itens na mochila;
+	\item Método: A - aproximado, E - exato, H - heurístico, MH - metaheurístico, Est - estatístico;
+	\item Complexidade: $O(2^{\frac{n}{2}})$, $O(n.log(n))$, $O(2^{n})$, $O(k^{n})$, $O(\frac{k^{n}}{k!})$ sendo ou não amortizadas;
+	\item Gerais: \# - nulo, ? - incerto, ! - variado.	
+\end{itemize}
+
+
+\begin{table}[htbp]
+	\scalefont{0.7}
+		\begin{tabular}{|l|l|l|l|l|}
+			\hline
+			\multicolumn{1}{|c|}{Autor} & Problema & Objetivo & Método & Complexidade \\ \hline
+			\cite{karp:1972} & Coletânea & \# & \# & \# \\ \hline
+			\cite{horowitz:1974} & Mochila & Mpitem & E & $O(2^{\frac{n}{2}})$ \\ \hline
+			\cite{garey:1979} & Coletânea & \# & \# & \# \\ \hline
+			\cite{schroeppel:1981} & Mochila & Mpitem & E & $O(2^{\frac{n}{2}})$ \\ \hline
+			\cite{karmarkar:1982} & MWNPP & MdiaP & H & $O(n.log(n))$ \\ \hline
+			\cite{gent:1995} & TWNPP & MmaxP, MminP, MdiaP & Est & \# \\ \hline
+			\cite{gent:1998} & TWNPP & MmaxP, MminP, MdiaP & Est, MH, H & (!) \\ \hline
+			\cite{korf:1998} & TWNPP & MmaxP, MminP, MdiaP & E & $O(2^{n})$, amortizado \\ \hline
+			\cite{berretta:1999} & TWNPP & MmaxP, MminP, MdiaP & MH, H & (!) \\ \hline
+			\cite{ferreira:2001} & TWNPP & MmaxP, MminP, MdiaP & Est & \# \\ \hline
+			\cite{hayes:2002} & TWNPP & MmaxP, MminP, MdiaP & Est & \# \\ \hline
+			\cite{mertens:2003} & TWNPP & MmaxP, MminP, MdiaP & Est & \# \\ \hline
+			\cite{michiels:2003} & MWNPP & MmaxP & A & $O(n.log(n))$ \\ \hline
+			\cite{korf:2009} & MWNPP & MmaxP & E & $O(k^{n})$, amortizado \\ \hline
+			\cite{pedroso:2010} & TWNPP & MmaxP, MminP, MdiaP & E & $O(2^{n})$, amortizado \\ \hline
+			\cite{korf:2010} & MWNPP & MmaxP, MminP, MdiaP & \# & \# \\ \hline
+			\cite{kojic:2010} & MDTWNPP & MdianP & MH & \# \\ \hline
+			\cite{petrica:2013} & MDMWNPP & MdianP (?) & MH & \# \\ \hline
+			\cite{moffitt:2013} & MWNPP & MmaxP  & E & $O(k^{n})$, amortizado \\ \hline
+			\cite{korf:2013} & MWNPP & MmaxP  & E, H & $O(\frac{k^{n}}{k!})$, amortizado \\ \hline
+			\cite{korf:2014} & MWNPP & MmaxP  & E, H & $O(\frac{k^{n}}{k!})$, amortizado \\ \hline
+			\cite{schreiber:2014} & MWNPP & MminP & E, H &(!) \\ \hline
+		\end{tabular}
+	\caption{ Quadro das contribuições mais relevantes }
+	\label{hist}
+\end{table}
+
+
+Os artigos onde o item "Problema" está classificado como "Coletânea" são abordagens teóricas sobre problemas NP-completos, por isso, "Objetivo", "Método" e "Complexidade" estão marcados com "\#".
+
+Nos artigos onde o "Método" está marcado com apenas "Est", não existe nenhum algoritmo proposto, mas sim, uma análise da dificuldade das instâncias.
+
+O termo "amortizado" significa que o algoritmo faz cortes em suas ramificações e quase nunca recai no pior caso.

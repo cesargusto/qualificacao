@@ -1,0 +1,285 @@
+\chapter{Fundamentação Teórica} \label{teorica}
+\markboth{Fundamentação Teórica}{Fundamentação Teórica}
+
+
+Este Capítulo apresenta os fundamentos básicos relacionados ao tema do projeto. A Seção \ref{graham} apresenta o Algoritmo (LPT). A Seção \ref{interchange} mostra o Algoritmo  0/1-{\em Interchange}, ambos desenvolvidos para problemas de escalonamento de máquinas. A Seção {mochila} discute a relação do Problema da k-Partição de Números com o Problema da Mochila. A Seção apresenta a versão geral da metaheurística \emph{Iterated Local Search} (ILS). Por fim, a Seção \ref{karmakarp} introduz a Heurística de Karmarkar-Karp e sua adaptação ao  Problema da k-Partição de Números. 
+
+
+\section{Algoritmo (LPT)}\label{graham}
+
+Proposto por \citet{graham:1966,graham:1969}, o algoritmo guloso {\em Longest Processing Time first} (LPT) foi desenvolvido para um problema de Partição Mínima e para o Problema de Escalonamento de Tarefaz diferente do Problema da k-Partição de Números (MWNPP), como comenta \citet{korf:2010}. 
+
+Este algoritmo garante um resultado com razão de aproximação menor que $\frac{4}{3}-\frac{1}{3k}$ do ótimo global em relação à função objetivo $\displaystyle\max_{1\leq i\leq k}\left\{\sum_{x\in A_i}x \right\} $. Isso significa que, se $OPT(S)$ é o valor ótimo da função objetivo e $LPT(S)$ o valor de função objetivo do LPT para uma instância $S$, a razão entre estes valores é tal que:
+\begin{equation}\label{aproxlpt}
+\frac{LPT(S)}{OPT(S)}\leq \frac{4}{3}-\frac{1}{3k}
+\end{equation}
+A demonstração de aproximabilidade se encontra em  \citet{kann:2003}.
+
+
+\begin{exem} \label{exemplo3}
+O resultado ótimo do Problema da k-Partição de Números para a instância:
+\[
+S = \{8,7,6,5,4\}
+\]
+\noindent  e $k=2$ é
+\[
+\{8,7\} \quad ~~\mbox{e}~~ \quad \{6,5,4\}
+\]
+\noindent A parte com a maior soma é $max\{8+7, ~ 6+5+4\}=15$. Substituindo $k=2$ na desigualdade \ref{aproxlpt} tem-se $\left(\frac{4}{3}-\frac{1}{6}\right)~15=\frac{7}{6}~15=17.5$.Portanto, a resposta do algoritmo (LPT) sempre é uma partição em que a maior soma é menor que $17.5$ como:
+\[
+\{ 8, 5, 4\} \quad ~~\mbox{e}~~ \quad \{7,6\}
+\]
+\noindent cuja maior soma é $17$, resultado encontrado pelo (LPT), mas nunca um valor $18$ como a partição abaixo:
+\[
+\{ 8,4\} \quad ~~\mbox{e}~~ \quad \{7,6,5\}
+\] {\null \hfill \mbox{$\Box$}}
+\end{exem}
+
+O algoritmo consiste em ordenar o conjunto $S$ em ordem não crescente e alocar os números, sempre inserindo o novo elemento na parte de menor soma e, em caso de empate, desempata-se arbitrariamente. Este algoritmo tem um custo com\-pu\-ta\-cio\-nal $O(nlog(n))$ para ordenar a entrada e um custo $O(n)$ para alocar os elementos nas $k$ partes. Finalmente, a complexidade do método é $O(nlog(n))$.
+
+O Algoritmo {\em Longest Processing Time first} (LPT) está apresentado no Algoritmo \ref{algoritmo2}. 
+
+\begin{algorithm}[H]\label{algoritmo2}
+\Entrada{Conjunto $S$ de números inteiros e um inteiro k}
+\Saida{Partição do conjunto $S$, $\{A_1, A_2, ..., A_k\}$, com tamanho k}
+\Inicio{
+	\Para{$j\in \{1, ..., k\}$}{
+		$A_j=\emptyset$\;
+		$L_j=0$\;
+	}
+	Ordene $S$ em ordem decrescente\;
+	\Para{$a\in S$}{
+		$l=\arg \min_{j} L_j$\;
+		$A_l=A_l\cup a$\;
+		$L_l=L_l+a$\;
+	}
+	\Retorna{$\{A_1, A_2, ..., A_k\}$}
+}
+\caption{{\em Longest Processing Time} para $k$ máquinas}
+\end{algorithm}
+
+
+\section{Algoritmo 0/1-{\em Interchange}}\label{interchange}
+
+O Algoritmo 0/1-\emph{Interchange}, proposto por \citet{horowitz:1979}, também é um método para o Problema de Escalonamento em $k$ máquinas idênticas. Partindo de uma distribuição inicial das tarefas, o algoritmo ordena os processadores em ordem não decrescente.
+
+Seja $d_i = L(A_1) - L(A_k)$ a diferença entre o instante de finalização do processador mais carregado e do menos carregado na iteração $i$. Enquanto existir uma tarefa $p\in A_1 ~:~ p<d_i$, está será realocada para $A_k$. Este algoritmo tem uma complexidade de tempo computacional da ordem $O(n.log(k))$, como demonstrado por \citet{langston:1982}
+
+O Algoritmo 0/1-\emph{Interchange} está apresentado no Algoritmo \ref{algoritmo3}.\\
+
+\begin{algorithm}[H]\label{algoritmo3}
+\Entrada{K-Partição $\{A_1, A_2, ..., A_k\}$ do conjunto $S$}
+\Saida{K-Partição do conjunto $S$, $\{A_1, A_2, ..., A_k\}$}
+\Inicio{
+	Ordene os tempos de cada máquina $L(A_1)\geq ...\geq L(A_k)$\;
+	$d=L(A_1)-L(A_k)$\;
+	\Enqto{$\exists q\in A_1 ~:~  L(q)<d$}{
+		$remove(A_1, q)$\;
+		$insere(A_k, q)$\;
+		$L(A_1)=L(A_1)-L(q)$\;
+		$L(A_k)=L(A_k)+L(q)$\;
+		$d=L(A_1)-L(A_k)$\;
+	}
+	\Retorna{$\{A_1, A_2, ..., A_k\}$}\;
+}
+\caption{Algoritmo 0/1-{\em Interchange}}
+\end{algorithm}
+
+
+\section{Problema da Mochila/Soma de Subconjuntos}\label{mochila}
+
+O Problema da Mochila é um dos mais estudados em Otimização Combinatória e costuma ser um subproblema muito comum em  vários trabalhos. Todas as variações do Problema da Mochila são NP-completos, mas admitem uma solução pseudo-polinomial, como pode ser encontrado em \citet{garey:1979} e \citet{kann:2003}.
+
+\begin{defi}
+Seja $W\in\mathbb{N}$ e um conjunto de itens $I=\{1,2,...,n\}$, tal que cada elemento de $I$ indexe um peso $w_i$ e um valor $p_i$. Encontre um subconjunto de itens que maximize o valor da mochila, respeitando sua capacidade de peso, dada por $W$.\fim
+\end{defi}
+
+A formulação matemática para esse problema é:
+
+\begin{eqnarray}
+\max && \sum_{j=1}^{n} p_j x_{j} \label{eq11} \\
+\mbox{s.a} && \sum_{j=1}^{n}w_i x_{j}\leq W  \label{eq12} \\
+&& x_{j}\in\{0,1\} \label{eq13}
+\end{eqnarray}
+
+O Problema da Soma de Subconjunto é um caso particular do Problema da Mochila, caracterizado por $\forall i\in I ~:~  w_i=p_i$. O algoritmo  pseudo-polinomial para resolve-lo tem custo $O(nW)$ e, por isso, costuma ser o mais indicado quando o conjunto de itens $I$ possui grande dimensão, mas o número $W$ tem poucos algarismos. Caso contrário, os algoritmos exatos mais eficientes são os propostos por \citet{horowitz:1974} e \citet{schroeppel:1981}. A ideia da solução é a seguinte:
+
+\begin{itemize}
+\item Caso o item $i$ faça parte da solução ótima considerando os itens $\{i,..., n\}$, tem-se uma solução com valor $p_i$ a mais do que a solução ótima para os itens $\{i+1,..., n\}$, com capacidade restante $W-w_i$. Esta ideia corresponde a fazer $x_i=1$, gerando o subproblema:
+\begin{equation}
+p_i + \max\left\{\sum_{j=i+1}^{n} p_j x_{j}~|~\sum_{j=i+1}^{n}w_j x_{j}\leq w-w_i, ~~ x_{j}\in\{0,1\}\right\}
+\end{equation}
+\item Caso contrário,  tem-se um valor correspondente à solução ótima para itens $\{i+1,..., n\}$ com capacidade $W$. Esta ideia corresponde a fazer $x_i=0$, gerando o subproblema
+\begin{equation}
+\max\left\{\sum_{j=i+1}^{n} p_j x_{j}~|~\sum_{j=i+1}^{n}w_j x_{j}\leq w, ~~ x_{j}\in\{0,1\}\right\}
+\end{equation}
+\end{itemize}
+
+Assim, seja $M(i, w)$ o valor da solução ótima para os itens $\{i,..., n\}$ e capacidade $W$, na forma: 
+\[
+M(i,w)=\max\{M(i+1,w), M(i+1, w-w_i)+p_i\}
+\]
+\noindent e o valor ótimo do problema será $M(1,W)$. 
+
+O Algoritmo \ref{algoritmo4} formaliza o procedimento.
+
+%%%%%%%%%%%%%%%
+\begin{algorithm}[H]\label{algoritmo4}
+\Entrada{Vetor $v$ de tamanho $n$ e uma capacidade $W$}
+\Saida{Subconjunto $S$ de índices de $v$}
+\Inicio{
+	Inicialize uma matriz $M \in \Re^{(n+1)\times (W+1)} = 0$\;
+	\Para{i=n até 1}{
+		\Para{w=0 até W}{
+			\Se{$i>n$ ou $w=0$}{
+				$M(i,w)=0$\;
+			}
+			\Se{$w_i>w$}{
+				$M(i,w)=M(i+1,w)$\;
+			}
+			\Se{$ max\{M(i + 1, w), M(i + 1, w - w_i ) + w_i\}$}{
+				$M(i,w)=0$\;
+			}
+		}
+	}
+	\Retorna{$M(1,W)$}
+}
+\caption{Algoritmo exato para Soma de Subconjuntos}
+\end{algorithm}
+
+O Algoritmo \ref{algoritmo4} cria uma matriz $n\times W$ com elementos $M_{i,j}$ é o valor ótimo do Problema da Mochila com capacidade $j$ usando os $i$ primeiros itens de $S$.
+
+\section{{\em  Iterated Local Search (ILS)}}\label{ils}
+
+A meta-heurística \emph{Iterated Local Search} (ILS) parte do pressuposto de que os ótimos locais podem ser totalmente percorridos por um tipo de movimento. Assim como todas as permutações de $n$ números podem ser expressas como um produto de transposições, o movimento definido para o (ILS) deve conseguir gerar todo o espaço de busca do problema abordado.
+
+O (ILS) proposto em \citet{lourenco:2003} funciona, genericamente, com alguns passos fundamentais.
+
+Gera-se uma solução inicial para o problema. Faz-se uma busca local da melhor solução na vizinhança. A vizinhança de $x$ é tudo que pode ser alcançado partido de $x$ com um único movimento. Perturba-se o espaço de soluções atuais quando este já estiver estagnado. A perturbação deve levar a próxima solução para fora da vizinhança da atual. Aceita-se ou não a solução atual de acordo com um critério, geralmente baseado no valor da função objetivo. O procedimento termina com o número máximo de iterações.
+
+O Algoritmo \ref{algoritmo5} apresenta a estrutura típica do (ILS).\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[H]\label{algoritmo5}
+\Entrada{Gerador de solução inicial}
+\Saida{Solução do espaço de busca}
+\Inicio{
+	$s_0=SolucaoInicial$ \;
+	$s=BuscaLocal(S_0)  $\;
+	$i=0$\;
+	\Enqto{$ i< Itermax$}{
+		$i=i+1$\;
+		$s'=Perturba(s)$\;
+		$s''=BuscaLocal(s')$\;
+		$s=Criterio(s, s', s'')$\;
+	}
+	\Retorna{$s$}
+}
+\caption{Algoritmo ILS}
+\end{algorithm}
+
+No Capítulo \ref{algoritmos} na Seção \ref{kpart-ils}, demonstram-se as principais funções do (ILS) de forma específica para o (MWNPP)
+
+\section{Heurística de Karmarkar-Karp para $k>2$}\label{karmakarp}
+
+A Heurística de Karmarkar-Karp, introduzida por \citet{karmarkar:1982}, é um método construtivo para o (TWNPP) que pode ser adaptado para o (MWNPP). Esse algoritmo escolhe alocar os dois maiores elementos de um conjunto, $S$, em partes distintas e, em seguida, adiciona a diferença entre os dois maiores elementos no conjunto como um novo elemento descontando o erro produzido pela alocação. 
+
+O pseudo-código da Heurística de Karmarkar-Karp está no Algoritmo \ref{algoritmo15}. \\
+
+%%%%%%%%%%%%%%%
+\begin{algorithm}[H]\label{algoritmo15}
+	\Entrada{Um conjunto $S$}
+	\Saida{Um inteiro}
+	\Inicio{
+		\Enqto{$|S|\neq 1$}{
+			$s1=removemax(S)$\;
+			$s2=removemax(S)$\;
+			$v=s1-s2$\;
+			$insereordenado(S,v)$\;
+		}	
+		\Retorna{$v[0]$}
+	}
+	\caption{Heurística de Karmarkar-Karp com $k=2$}
+\end{algorithm}
+
+
+O Exemplo \ref{exemplo7} mostra uma aplicação dessa heurística. 
+
+\begin{exem}\label{exemplo7}	
+
+Seja $S=\{8,7,6,5,4\}$ e $k=2$.
+\begin{itemize}
+\item iteração 1:$\{{\bf 8,7},6,5,4\}\Rightarrow \{6,5,4,1\}$
+\item iteração 2:$\{{\bf 6,5},4,1\}\Rightarrow \{4,1,1\}$
+\item iteração 3:$\{{\bf 4,1},1\}\Rightarrow \{3,1\}$
+\item iteração 4:$\{{\bf 3,1}\}\Rightarrow \{2\}$
+\end{itemize}
+
+O procedimento retorna o valor de função objetivo igual a $2$ e a partição $\{A_1, A_2\} = \left\{ (8,6), (7,5,4) \right\}$. 
+
+É importante observar que este resultado não se constitui na solução ótima do problema para esta instância.  
+\end{exem}
+
+Para uma implementação de baixo custo computacional, usando uma estrutura de dados \texttt{max-heap}, a complexidade desse algoritmo é $O(n.log(n))$. 
+
+A adaptação desse algoritmo para o (MWNPP) consiste em substituir a operação de diferença entre os dois maiores elementos do conjunto pelo Algoritmo \ref{algoritmo6} e seguir a mesma lógica de funcionamento do Exemplo \ref{exemplo7}. A diferença é que os elementos são vetores de dimensão $k$ e não escalares. Logo, a estrutura de dados \texttt{max-heap} deve operá-los em ordem lexicográfica.\\
+
+\begin{algorithm}[H]\label{algoritmo6}
+	\Entrada{Dois vetores ordenados, $x$ e $y$, e um inteiro $k$}
+	\Saida{Um vetor ordenado de tamanho k}
+	$opera(x,y,k)$\;
+	\Inicio{
+		$s[k]$\;
+		\Para{$i=0$ até $n-1$}{
+			$s[i]=x[i]+y[n-i]$\;
+		}
+		ordene $s$ em ordem não crescente\;
+		\Para{$i=0$ até $n-1$}{
+			$s[i]=s[i]+s[n-1]$\;
+		}
+
+		\Retorna{$s$}
+	}
+	\caption{Modificação na Heurística de Karmarkar-Karp para o (MWNPP)}
+\end{algorithm}
+
+O pseudo-código usado para resolver o exemplo \ref{exemplo8} está no Algoritmo \ref{algoritmo7}. A única mudança em relação à Heurística de Karmarkar-Karp original é a troca de $v=s1-s2$ por $v=opera(s1,s2,k)$.\\
+
+%%%%%%%%%%%%%%%
+\begin{algorithm}[H]\label{algoritmo7}
+	\Entrada{Um conjunto $S$, e um inteiro $k$}
+	\Saida{Um inteiro}
+	\Inicio{
+		\Enqto{$|S|\neq 1$}{
+			$s1=removemax(S)$\;
+			$s2=removemax(S)$\;
+			$v=opera(s1,s2,k)$\;
+			$insereordenado(S,v)$\;
+		}	
+		\Retorna{$v[0]$}
+	}
+	\caption{Heurística de Karmarkar-Karp com $k>2$}
+\end{algorithm}
+
+
+O exemplo \ref{exemplo8} mostra o funcionamento da Heurística de Karmarkar-Karp para $k>2$ fazendo cada iteração em duas ou 3 fases para demonstrar o nova .
+
+\begin{exem}\label{exemplo8}
+Seja $S=\{8,7,6,5,4\}$ e $k=3$.
+\begin{itemize}
+\item iteração 1:$\{{\bf (8,0,0),(7,0,0)},(6,0,0),(5,0,0),(4,0,0)\}\Rightarrow$\\$\{(8,7,0),(6,0,0),(5,0,0),(4,0,0)\}$\\
+\item iteração 2:$\{{\bf (8,7,0),(6,0,0)},(5,0,0),(4,0,0)\}\Rightarrow \{(8,7,6),(5,0,0),(4,0,0)\}\Rightarrow$\\ $\{(5,0,0),(4,0,0),(2,1,0)\}$\\
+\item iteração 3:$\{{\bf (5,0,0),(4,0,0)},(2,1,0)\}\Rightarrow \{(5,4,0),(2,1,0)\}$\\
+\item iteração 4:$\{{\bf (5,4,0),(2,1,0)}\}\}\Rightarrow \{(5,5,3)\}\Rightarrow \{(3,3,0)\}$\\
+\end{itemize}
+O procedimento retorna um valor de função objetivo igual a $3$ e uma partição $\{8\}, \{7,4\}, \{6,5\}$
+\end{exem}
+
+
+
+
+
+
+
+
+
